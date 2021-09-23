@@ -1,6 +1,8 @@
 .SUFFIXES:
 default:
 
+PRIVATE_FILES=Lab.key.ipynb admin .git
+
 .PHONY: create-labs
 create-labs:
 	cse142 lab delete -f compiler-bench
