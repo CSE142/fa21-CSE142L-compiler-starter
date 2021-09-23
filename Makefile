@@ -34,7 +34,6 @@ endif
 .PHONY: autograde
 autograde: sum.exe regressions.json
 	./sum.exe --stats benchmark.csv --stat-set PE.cfg  --stat-set bench.cfg --MHz 3500
-	env
 
 $(BUILD)sum.o: Makefile config.make
 sum.exe: $(BUILD)sum.o $(BUILD)sum_main.o $(BUILD)sum_baseline.o
