@@ -16,6 +16,7 @@ include $(ARCHLAB_ROOT)/cse141.make
 
 STUDENT_EDITABLE_FILES=sum.cpp config.make
 
+
 ifeq ($(DEVEL_MODE),yes)
         # DEVEL_MODE is set to yes, when they run their code locally.
         # This means that libarchlab can't access the performance
@@ -31,17 +32,18 @@ endif
 
 
 .PHONY: autograde
-autograde: sum.exe
-	./sum.exe --stats benchmark.csv --stat-set PE.cfg --MHz 3500
+autograde: sum.exe regressions.json
+	./sum.exe --stats benchmark.csv --stat-set PE.cfg  --stat-set bench.cfg --MHz 3500
 
 $(BUILD)sum.o: Makefile config.make
-sum.exe: $(BUILD)sum.o $(BUILD)sum_main.o
+sum.exe: $(BUILD)sum.o $(BUILD)sum_main.o $(BUILD)sum_baseline.o
+
+$(BUILD)sum.o: OPTIMIZE=$(SUM_OPTIMIZE)
 
 $(BUILD)microbench.o: OPTIMIZE=$(MICROBENCH_OPTIMIZE)
 $(BUILD)microbench.s: OPTIMIZE=$(MICROBENCH_OPTIMIZE)
 
 CZOO_OPTIMIZE=-O3 -fkeep-inline-functions #-funroll-all-loops
-
 SORT_OPTIMIZE=-O3 -fkeep-inline-functions #-funroll-all-loops
 
 hello_fiddle.exe: $(BUILD)hello_fiddle.o
@@ -119,4 +121,19 @@ sort_revisited.exe: $(BUILD)sort_revisited.o
 mimic_1.exe: $(BUILD)mimic_1.o
 loop_func.exe: $(BUILD)loop_func.o
 
--include admin/rules.make
+#-include admin/solution.make
+
+run_tests.exe: $(BUILD)sum.o $(BUILD)sum_baseline.o
+
+regressions.json: run_tests.exe
+	./run_tests.exe --gtest_output=json:$@
+
+SOLUTION?=.
+$(BUILD)config.make: $(SOLUTION)/config.make
+	mkdir -p $(BUILD)
+	cp $^ $@
+$(BUILD)sum.cpp: $(SOLUTION)/sum.cpp
+	mkdir -p $(BUILD)
+	cp $^ $@
+
+-include $(BUILD)config.make
