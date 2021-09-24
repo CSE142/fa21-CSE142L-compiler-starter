@@ -273,6 +273,7 @@ def compare(content, headings=None):
 
 def render_code(*argc, **kwargs):
     display(do_render_code(*argc, **kwargs))
+
 def do_render_code(file, lang="c++", show=None, line_numbers=True, trim_ends=False, demangle=None):
 
     if demangle is None:
@@ -320,7 +321,8 @@ def do_render_code(file, lang="c++", show=None, line_numbers=True, trim_ends=Fal
         start_line += 1
         end_line -= 1
             
-    comments = {"c++": "//",
+    comments = {"json": "//",
+                "c++": "//",
                 "gas": ";",
                 "python" : "#"}
     
@@ -463,13 +465,15 @@ def plotPE(file=None, what=None, df=None, columns=4, log=False, average=False, a
             else:
                 d.plot.scatter(y=y, x=x, ax=axs, s=dot_size)
 
-def plotPEBar(file, what, columns=4, log=False, average=False, average_by=None, skip=0, height=1):
+def plotPEBar(file=None, df=None, what=None, columns=4, log=False, average=False, average_by=None, skip=0, height=1):
+    if df is None:
+        df = render_csv(file,average_by=average_by, skip=skip)
         
     rows = int(math.ceil(len(what)/columns))
     f = plt.figure(figsize=[4*columns, 4*rows*height], dpi = 100)
     
     for i, (x, y) in enumerate(what):
-        df = render_csv(file, average_by=average_by, skip=skip)
+        d = df.copy()
         axs = f.add_subplot(rows, columns, i+ 1)
         axs.set_ylabel(y)
         #axs.set_xlabel(x)
@@ -478,19 +482,19 @@ def plotPEBar(file, what, columns=4, log=False, average=False, average_by=None, 
             #axs.set_xscale("log")
             axs.set_yscale("log")
         else:
-            axs.set_ybound(0, df[y].max()*1.4)
-            #axs.set_xbound(0, df[x].max()*1.1)
+            axs.set_ybound(0, d[y].max()*1.4)
+            #axs.set_xbound(0, d[x].max()*1.1)
             axs.set_autoscalex_on(False)
             axs.set_autoscaley_on(False)
             
         if average:
-            df = df.groupby(x).mean()
-            df[x] = df.index
-            df.plot.bar(y=y, x=x, ax=axs)
+            d = d.groupby(x).mean()
+            d[x] = d.index
+            d.plot.bar(y=y, x=x, ax=axs)
         else:
-            df.plot.bar(y=y, x=x, ax=axs)
+            d.plot.bar(y=y, x=x, ax=axs)
         
-        for i, v in enumerate(df[y]):
+        for i, v in enumerate(d[y]):
             axs.text(i, v, f"{float(v):3.2}", ha='center' )
             
     plt.tight_layout()
