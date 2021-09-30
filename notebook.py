@@ -232,12 +232,7 @@ def my_render(c):
         return r
     else:
         return f'<img src="data:image/png;base64,{c._repr_png_()}">'
-
-def compare(content, headings=None):
-    if headings is None:
-        headings = [""] * len(content)
-        
-    display(HTML("""
+compare_style = """
             <style>
         .side-by-side {
             display: flex;
@@ -262,6 +257,26 @@ def compare(content, headings=None):
 
         }
         </style>
+"""
+def heading(s):
+    display(HTML(f"""
+    {compare_style}
+        <div class="side-by-side"> """ +
+                 
+                 f"<div class='side-by-side-pane'><div class='heading'>{s}</div></div>" +
+
+
+                 """
+        </div>
+    """))
+
+    
+def compare(content, headings=None):
+    if headings is None:
+        headings = [""] * len(content)
+        
+    display(HTML(f"""
+    {compare_style}
         <div class="side-by-side"> """ +
                  
                  "".join([f"<div class='side-by-side-pane'><div class='heading'>{headings[i]}</div><div>{my_render(c)}</div></div>" for (i,c) in enumerate(content)]) +
@@ -293,9 +308,9 @@ def do_render_code(file, lang="c++", show=None, line_numbers=True, trim_ends=Fal
 
     if isinstance(show, str):
         if lang == "c++":
-            show = (f"[\s\*]{show}\s*\(", "^\}")
+            show = (f"[\s\*]{re.escape(show)}\s*\(", "^\}")
         elif lang == "gas":
-            show = (f"^{show}:\s*", ".cfi_endproc")
+            show = (f"^{re.escape(show)}:\s*", ".cfi_endproc")
         else:
             raise Exception("Don't know how to find functions in {lang}")
 

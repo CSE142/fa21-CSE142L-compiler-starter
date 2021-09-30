@@ -111,6 +111,8 @@ CSE.exe: $(BUILD)CSE.o
 SR.exe: $(BUILD)SR.o
 SR2.exe: $(BUILD)SR2.o
 unroll1.exe: $(BUILD)unroll1.o
+unroll-not.exe: $(BUILD)unroll-not.o
+classes.exe: $(BUILD)classes.o
 CP.exe: $(BUILD)CP.o
 CP2.exe: $(BUILD)CP2.o
 LICM.exe: $(BUILD)LICM.o
