@@ -9,6 +9,7 @@ from CSE142L.cli import cse142L_run
 from IPython.display import Image, IFrame
 
 os.environ['CSE142L_LAB'] = 'compiler'
+os.environ['DJR_SERVER'] = 'http://prerelease-dot-cse142l-dev.wl.r.appspot.com/'
 
 columns=["IC", "CPI", "CT", "ET", "cmdlineMHz", "realMHz"] # This is the subset of the data we will pay attention to.
 
@@ -68,7 +69,8 @@ def build_reps(src, asm, obj, function, gmon=None, run=True, *argc, **kwargs):
                           inst_counts=True,
                           remove_assembly=False,
                           trim_addresses=False,
-                          trim_comments=False),
+                          trim_comments=False,
+                          pretty_loops=True)
         cfg=do_cfg(obj,
                    output=f"{obj}-{function}-cfg.png",
                    symbol=function,
@@ -77,7 +79,8 @@ def build_reps(src, asm, obj, function, gmon=None, run=True, *argc, **kwargs):
                    number_nodes=kwargs.get('number_nodes', False),
                    remove_assembly=kwargs.get('remove_assembly', False),
                    trim_addresses=kwargs.get('trim_addresses', True),
-                   trim_comments=kwargs.get('trim_comments', False))
+                   trim_comments=kwargs.get('trim_comments', False),
+                   pretty_loops=True)
     else:
         cfg_counts = None
         cfg = None
