@@ -59,8 +59,10 @@ def build_reps(src, asm, obj, function, gmon=None, run=True, *argc, **kwargs):
     else:
         gprof = None
         call_graph = None
-        
+
+    pretty_loops = kwargs.pop("pretty_loops", False)
     if function:
+        
         cfg_counts=do_cfg(obj,
                           output=f"{obj}-{function}-counts.png",
                           symbol=function,
@@ -70,7 +72,7 @@ def build_reps(src, asm, obj, function, gmon=None, run=True, *argc, **kwargs):
                           remove_assembly=False,
                           trim_addresses=False,
                           trim_comments=False,
-                          pretty_loops=True)
+                          pretty_loops=pretty_loops)
         cfg=do_cfg(obj,
                    output=f"{obj}-{function}-cfg.png",
                    symbol=function,
@@ -80,7 +82,7 @@ def build_reps(src, asm, obj, function, gmon=None, run=True, *argc, **kwargs):
                    remove_assembly=kwargs.get('remove_assembly', False),
                    trim_addresses=kwargs.get('trim_addresses', True),
                    trim_comments=kwargs.get('trim_comments', False),
-                   pretty_loops=True)
+                   pretty_loops=pretty_loops)
     else:
         cfg_counts = None
         cfg = None
