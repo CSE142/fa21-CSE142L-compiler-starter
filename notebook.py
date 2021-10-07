@@ -82,7 +82,7 @@ def build_reps(src, asm, obj, function, gmon=None, run=True, *argc, **kwargs):
                    remove_assembly=kwargs.get('remove_assembly', False),
                    trim_addresses=kwargs.get('trim_addresses', True),
                    trim_comments=kwargs.get('trim_comments', False),
-                   pretty_loops=pretty_loops)
+        pretty_loops=pretty_loops)
     else:
         cfg_counts = None
         cfg = None

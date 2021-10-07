@@ -31,6 +31,8 @@ uint64_t sum_of_locations_solution(uint64_t *search_space, uint32_t search_space
 	return r;
 }
 
+// hello
+
 FUNCTION("sum_impl", sum_of_locations_solution);
 
 END_C
