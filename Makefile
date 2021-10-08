@@ -138,5 +138,5 @@ $(BUILD)sum.cpp: $(SOLUTION)/sum.cpp
 	mkdir -p $(BUILD)
 	cp $^ $@
 
--include $(BUILD)config.make
--include $(DJR_JOB_ROOT)/$(LAB_SUBMISSION_DIR)/config.make
+#-include $(BUILD)config.make
+include $(DJR_JOB_ROOT)/$(LAB_SUBMISSION_DIR)/config.make
