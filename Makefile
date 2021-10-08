@@ -14,7 +14,7 @@ create-labs:
 COMPILER=gcc-8
 include $(ARCHLAB_ROOT)/cse141.make
 
-STUDENT_EDITABLE_FILES=sum.cpp config.make $(LAB_SUBMISSION_DIR)
+STUDENT_EDITABLE_FILES=sum.cpp config.make
 
 
 ifeq ($(DEVEL_MODE),yes)
@@ -131,13 +131,13 @@ regressions.json: run_tests.exe
 	./run_tests.exe --gtest_output=json:$@
 
 
-$(BUILD)config.make: $(LAB_SUBMISSION_DIR)/config.make
-	mkdir -p $(BUILD)
-	cp $^ $@
+#$(BUILD)config.make: $(LAB_SUBMISSION_DIR)/config.make
+#	mkdir -p $(BUILD)
+#	cp $^ $@
 
-$(BUILD)sum.cpp: $(LAB_SUBMISSION_DIR)/sum.cpp
-	mkdir -p $(BUILD)
-	cp $^ $@
+#$(BUILD)sum.cpp: $(LAB_SUBMISSION_DIR)/sum.cpp
+#	mkdir -p $(BUILD)
+#	cp $^ $@
 
 #-include $(BUILD)config.make
 include $(DJR_JOB_ROOT)/$(LAB_SUBMISSION_DIR)/config.make
