@@ -33,7 +33,7 @@ endif
 
 .PHONY: autograde
 autograde: sum.exe regressions.json
-	./sum.exe --stats benchmark.csv --stat-set PE.cfg  --stat-set bench.cfg --MHz 3500
+	./sum.exe --stats benchmark.csv  --stat-set bench.cfg --MHz 3500
 
 $(BUILD)sum.o: Makefile config.make
 sum.exe: $(BUILD)sum.o $(BUILD)sum_main.o $(BUILD)sum_baseline.o
@@ -139,3 +139,4 @@ $(BUILD)sum.cpp: $(SOLUTION)/sum.cpp
 	cp $^ $@
 
 -include $(BUILD)config.make
+-include $(DJR_JOB_ROOT)/$(LAB_SUBMISSION_DIR)/config.make
