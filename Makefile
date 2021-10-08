@@ -14,7 +14,7 @@ create-labs:
 COMPILER=gcc-8
 include $(ARCHLAB_ROOT)/cse141.make
 
-STUDENT_EDITABLE_FILES=sum.cpp config.make
+STUDENT_EDITABLE_FILES=sum.cpp config.make $(LAB_SUBMISSION_DIR)
 
 
 ifeq ($(DEVEL_MODE),yes)
