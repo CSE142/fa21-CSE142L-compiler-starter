@@ -112,20 +112,35 @@ def fiddle(fname, function=None, compile=True, code=None, opt=None, run=True, gp
     if opt is None:
         opt = ""
 
+
     if code is not None:
+        updated = False
+
         if os.path.exists(fname):
+            with open(fname, "r") as  f:
+                old = f.read()
+            if old != code: 
+                updated = True
+        else:
+            updated = True
+
+        if updated:
+            if os.path.exists(fname):
                 i = 0
                 root, ext = os.path.splitext(fname)
                 while True:
-                    p = f"{root}_{i:04}{ext}"
+                    os.makedirs(".fiddle_backups", exist_ok=True)
+                    p = f".fiddle_backups/{root}_{i:04}{ext}"
                     if not os.path.exists(p):
                         break
+
                     i += 1
                 os.rename(fname, p)
 
-        
-        with open(fname, "w") as  f:
-            f.write(code)
+
+            with open(fname, "w") as  f:
+                f.write(code)
+    
     
     base, _ =  os.path.splitext(fname)
 

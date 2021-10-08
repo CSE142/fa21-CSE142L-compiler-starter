@@ -12,8 +12,8 @@ from CSE142L.jextract import extract as qjson
 @click.option("--results", required=True, type = click.File(mode="w"), help="Where to put results")
 def autograde(submission=None, results=None):
 
-    target_speedup = 40.0
-    speedup = round(float(qcsv(os.path.join(submission, "benchmark.csv"), field="speedup",where=["function"], _is=["sum_of_locations_solution"])), 2)
+    target_speedup = 35.0
+    speedup = round(float(qcsv(os.path.join(submission, "autograde.csv"), field="speedup",where=["function"], _is=["sum_of_locations_solution"])), 2)
     failures = qjson(json.load(open(os.path.join(submission, "regressions.json"))), ["testsuites", 0, "failures"])
     score = round(speedup/target_speedup*100.0, 2)
 
