@@ -33,7 +33,7 @@ endif
 
 .PHONY: autograde
 autograde: sum.exe regressions.json
-	./sum.exe --stats benchmark.csv  --stat-set bench.cfg --MHz 3500
+	./sum.exe --stats benchmark.csv --stat=ET=ARCHLAB_WALL_TIME  --stat-set bench.cfg --MHz 3500
 
 $(BUILD)sum.o: Makefile config.make
 sum.exe: $(BUILD)sum.o $(BUILD)sum_main.o $(BUILD)sum_baseline.o
