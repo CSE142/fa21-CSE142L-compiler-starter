@@ -33,7 +33,7 @@ endif
 
 .PHONY: autograde
 autograde: sum.exe regressions.json
-	./sum.exe --stats benchmark.csv --stat=ET=ARCHLAB_WALL_TIME  --stat-set bench.cfg --MHz 3500
+	./sum.exe --stats autograde.csv --stat=ET=ARCHLAB_WALL_TIME --function sum_of_locations_solution  --stat-set bench.cfg --MHz 3500
 
 $(BUILD)sum.o: Makefile config.make
 sum.exe: $(BUILD)sum.o $(BUILD)sum_main.o $(BUILD)sum_baseline.o
@@ -130,11 +130,12 @@ run_tests.exe: $(BUILD)sum.o $(BUILD)sum_baseline.o
 regressions.json: run_tests.exe
 	./run_tests.exe --gtest_output=json:$@
 
-SOLUTION?=.
-$(BUILD)config.make: $(SOLUTION)/config.make
+
+$(BUILD)config.make: $(LAB_SUBMISSION_DIR)/config.make
 	mkdir -p $(BUILD)
 	cp $^ $@
-$(BUILD)sum.cpp: $(SOLUTION)/sum.cpp
+
+$(BUILD)sum.cpp: $(LAB_SUBMISSION_DIR)/sum.cpp
 	mkdir -p $(BUILD)
 	cp $^ $@
 
