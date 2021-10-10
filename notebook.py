@@ -112,7 +112,7 @@ def fiddle(fname, function=None, compile=True, code=None, opt=None, run=True, gp
     if opt is None:
         opt = ""
 
-
+    
     if code is not None:
         updated = False
 

@@ -117,6 +117,11 @@ int main(int argc, char *argv[])
 						for(uint r = 0; r < reps; r++) {
 							f(array,size);
 						}
+					} else if (func.first == "method") {
+						auto f = (int(*)(register unsigned long int))(func.second);
+						for(uint r = 0; r < reps; r++) {
+							f(size);
+						}
 					} else {
 						std::cerr << "unknown function type: " << func.first << "\n";
 						exit(1);

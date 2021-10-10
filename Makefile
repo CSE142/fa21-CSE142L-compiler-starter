@@ -66,6 +66,7 @@ $(BUILD)czoo_O3.s: Makefile
 czoo.exe: $(BUILD)czoo.o $(BUILD)main.o 
 czoo_O3.exe: $(BUILD)czoo_O3.o $(BUILD)main.o
 
+virt.exe: $(BUILD)virt.o $(BUILD)main.o
 
 sort.exe: $(BUILD)sort.o $(BUILD)main.o 
 sort_O1.exe: $(BUILD)sort_O1.o $(BUILD)main.o
@@ -84,6 +85,8 @@ sort_O3.cpp : sort.cpp
 	cp $^ $@
 sort_Og.cpp : sort.cpp
 	cp $^ $@
+
+
 
 $(BUILD)czoo_O3.o: OPTIMIZE=$(CZOO_OPTIMIZE)
 $(BUILD)czoo_O3.s: OPTIMIZE=$(CZOO_OPTIMIZE)
